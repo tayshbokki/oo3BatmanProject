@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class MazeGame {
     public static void main(String[] args) {
-        int size = 10; // Change the maze size as needed
+        int size = 10;
         Gothammaze city = new Gothammaze(size);
         int[][] maze = city.generateMaze();
 
