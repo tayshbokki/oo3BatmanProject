@@ -75,7 +75,6 @@ public class MazeSolver {
         this.playerY = 0;
         this.solved = false;
     }
-
-    // PrintSolution method remains the same
+    
 
 }
