@@ -6,10 +6,14 @@ public class MazeGame {
         Gothammaze city = new Gothammaze(size);
         MazeSolver mazeSolver = new MazeSolver();
 
-        while (true) {
-            int[][] maze = city.generateMaze();
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+
+        while (playAgain) {
+            int[][] maze = city.generateMaze(); // Generate a new maze
             mazeSolver.setMaze(maze);
 
+            System.out.println("Welcome to Gotham City!{REACH THE BOTTOM RIGHT}:");
             printMaze(maze, mazeSolver.getPlayerX(), mazeSolver.getPlayerY());
 
             while (!mazeSolver.isSolved()) {
@@ -19,16 +23,29 @@ public class MazeGame {
                 printMaze(maze, mazeSolver.getPlayerX(), mazeSolver.getPlayerY());
             }
 
-            System.out.println("You have reached your destination.");
-
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Are you ready for the next difficulty? (y/n): ");
-            String playAgain = scanner.nextLine().trim().toLowerCase();
-            if (!playAgain.equals("y")) {
-                break;
+            if (city.getCurrentLayout() == city.getTotalLayouts() - 1) {
+                System.out.println("Congratulations! You have completed all mazes.");
+                playAgain = false;
+            } else {
+                System.out.println("You have reached your destination.");
+                boolean validInput = false;
+                while (!validInput) {
+                    System.out.print("Are you ready for the next difficulty? (y/n): ");
+                    String input = scanner.nextLine().trim().toLowerCase();
+                    if (input.equals("y")) {
+                        mazeSolver.resetSolver();
+                        validInput = true;
+                    } else if (input.equals("n")) {
+                        playAgain = false;
+                        validInput = true;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                    }
+                }
             }
-            mazeSolver.resetSolver();
         }
+
+        System.out.println("Thanks for playing! Goodbye.");
     }
 
     private static void printMaze(int[][] maze, int playerX, int playerY) {
@@ -40,9 +57,9 @@ public class MazeGame {
                 } else if (maze[i][j] == 1) {
                     System.out.print(" __ "); // Empty space for paths
                 } else if (maze[i][j] == 2) {
-                    System.out.print(" ↟↟ "); // Tree
+                    System.out.print(" ⍋⍋ "); // Tree
                 } else if (maze[i][j] == 3) {
-                    System.out.print("ꔮꔮ"); // Car
+                    System.out.print(" ꔮꔮ "); // Car
                 } else {
                     System.out.print(" ██ "); // Colored block for walls
                 }
