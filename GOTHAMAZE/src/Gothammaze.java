@@ -4,26 +4,23 @@ public class Gothammaze {
     private int size;
     private int[][] maze;
     private int[][][] mazeLayouts;
-    private Random random;
+    private int currentLayout;
 
     public Gothammaze(int size) {
         this.size = size;
-        this.maze = new int[size][size];
-        this.random = new Random();
-
-        // Define three different maze layouts
         this.mazeLayouts = new int[3][size][size];
         generateLayout1();
         generateLayout2();
         generateLayout3();
+        this.currentLayout = 0; // Start with the first layout
     }
 
     public int[][] generateMaze() {
-        int layoutIndex = random.nextInt(3); // Randomly choose one of the three layouts
-        this.maze = mazeLayouts[layoutIndex];
+        int[][] maze = mazeLayouts[currentLayout];
+        currentLayout = (currentLayout + 1) % 3; // Cycle to the next layout
         return maze;
     }
-
+    //1 is free 0 is wall
     private void generateLayout1() {
         // Define the maze layout 1
         int[][] layout1 = {
@@ -33,7 +30,7 @@ public class Gothammaze {
                 {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
                 {0, 1, 1, 1, 1, 1, 0, 1, 1, 0},
                 {0, 1, 0, 0, 0, 1, 0, 1, 0, 0},
-                {0, 1, 0, 0, 0, 1, 0, 1, 0, 0},
+                {0, 1, 0, 0, 0, 2, 0, 1, 0, 0},
                 {0, 1, 1, 0, 1, 0, 0, 1, 0, 0},
                 {0, 1, 0, 0, 1, 1, 1, 1, 1, 1},
                 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0}
